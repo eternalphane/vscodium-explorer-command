@@ -96,9 +96,9 @@ class __declspec(uuid(DLL_UUID)) ExplorerCommandHandler final : public RuntimeCl
     wchar_t expanded_value_w[kMaxStringLength];
     DWORD value_size_w = sizeof(value_w);
 #if defined(INSIDER)
-    const wchar_t kTitleRegkey[] = L"Software\\Classes\\VSCodeInsidersContextMenu";
+    const wchar_t kTitleRegkey[] = L"Software\\Classes\\VSCodiumInsidersContextMenu";
 #else
-    const wchar_t kTitleRegkey[] = L"Software\\Classes\\VSCodeContextMenu";
+    const wchar_t kTitleRegkey[] = L"Software\\Classes\\VSCodiumContextMenu";
 #endif
     HKEY subhkey = nullptr;
     LONG result = RegOpenKeyEx(HKEY_LOCAL_MACHINE, kTitleRegkey, 0, KEY_READ, &subhkey);

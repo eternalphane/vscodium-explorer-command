@@ -48,10 +48,10 @@
     ],
   },
   'targets': [{
-    'target_name': 'code_explorer_command',
+    'target_name': 'codium_explorer_command',
     'type': 'shared_library',
     'defines': [
-      'EXE_NAME="Code.exe"',
+      'EXE_NAME="VSCodium.exe"',
     ],
     'conditions': [
       [ 'OS=="win"', {
@@ -78,10 +78,10 @@
       }],
     ],
   }, {
-    'target_name': 'code_insiders_explorer_command',
+    'target_name': 'codium_insiders_explorer_command',
     'type': 'shared_library',
     'defines': [
-      'EXE_NAME="Code - Insiders.exe"',
+      'EXE_NAME="VSCodium - Insiders.exe"',
       'INSIDER=1',
     ],
     'conditions': [
