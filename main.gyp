@@ -59,19 +59,19 @@
           ['target_arch=="x86"', {
             'TargetMachine' : 1,              # /MACHINE:X86
             'defines': [ 
-              'DLL_UUID="0632BBFB-D195-4972-B458-53ADEB984588"',
+              'DLL_UUID="18877606-DAD0-495D-BC63-1AFE7AE1421E"',
             ],
           }],
           ['target_arch=="x64"', {
             'TargetMachine' : 17,             # /MACHINE:X64
             'defines': [ 
-              'DLL_UUID="1C6DF0C0-192A-4451-BE36-6A59A86A692E"',
+              'DLL_UUID="738B8814-DF7F-4E12-9408-A406928BA4A5"',
             ],
           }],
           ['target_arch=="arm64"', {
             'TargetMachine' : 18,             # /MACHINE:ARM64 https://learn.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.vcprojectengine.machinetypeoption?view=visualstudiosdk-2022
             'defines': [ 
-              'DLL_UUID="F5EA5883-1DA8-4A05-864A-D5DE2D2B2854"',
+              'DLL_UUID="EAB622C6-23B0-461A-9D93-F033C101C00D"',
             ],
           }],
         ],
@@ -90,19 +90,19 @@
           ['target_arch=="x86"', {
             'TargetMachine' : 1,              # /MACHINE:X86
             'defines': [ 
-              'DLL_UUID="B9949795-B37D-457F-ADDE-6A950EF85CA7"',
+              'DLL_UUID="E4020A7F-81EF-4D44-A39E-F1B5939CBE3D"',
             ],
           }],
           ['target_arch=="x64"', {
             'TargetMachine' : 17,             # /MACHINE:X64
             'defines': [ 
-              'DLL_UUID="799F4F7E-5934-4001-A74C-E207F44F05B8"',
+              'DLL_UUID="24EA9688-2FCD-49FC-9B8F-25283351AD01"',
             ],
           }],
           ['target_arch=="arm64"', {
             'TargetMachine' : 18,             # /MACHINE:ARM64
             'defines': [ 
-              'DLL_UUID="7D34756D-32DD-4EE6-B99F-2691C0DAD875"',
+              'DLL_UUID="D255504C-24B7-456B-9A81-80BF73A5762C"',
             ],
           }],
         ],
