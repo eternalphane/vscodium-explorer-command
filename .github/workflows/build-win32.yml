@@ -12,15 +12,15 @@ permissions:
   contents: read
 
 jobs:
-  Env:
-    GYP_MSVS_VERSION: '2022'
-    NAME: codium_explorer
-    NAME_INSIDER: codium_insiders_explorer
   build:
     runs-on: windows-latest
     defaults:
       run:
-        shell: pwsh
+          shell: pwsh
+    env:
+      GYP_MSVS_VERSION: '2022'
+      NAME: codium_explorer
+      NAME_INSIDER: codium_insiders_explorer
     strategy:
       matrix:
         arch:
