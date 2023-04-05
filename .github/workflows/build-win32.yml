@@ -42,24 +42,25 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
       with:
         msbuild-architecture: ${{ matrix.arch }}
-      
+
     - name: Generate project solution
       run: |
-        python gyp_library.py ${{ matrix.arch }}
+        & python gyp_library.py ${{ matrix.arch }}
 
     - name: Build
       working-directory: out
       run: |
-        msbuild main.sln
+        & msbuild /m main.sln
 
     - name: Create sparse packages
       working-directory: out
       run: |
         $arch = '${{ matrix.arch }}'
-        makeappx pack /d ${Env:NAME}_pkg_${arch} /p ${Env:NAME}_${arch}.appx /nv
-        makeappx pack /d ${Env:NAME_INSIDER}_pkg_${arch} /p ${Env:NAME_INSIDER}_${arch}.appx /nv
-        Compress-Archive -LiteralPath "${Env:NAME}_${arch}.appx", "Default/${Env:NAME}_command.dll" -DestinationPath ${Env:NAME}_${arch}.zip
-        Compress-Archive -LiteralPath "${Env:NAME_INSIDER}_${arch}.appx", "Default/${Env:NAME_INSIDER}_command.dll" -DestinationPath ${Env:NAME_INSIDER}_${arch}.zip
+        $makeappx = 'C:\Program Files (x86)\Windows Kits\10\App Certification Kit\makeappx.exe'
+        & "$makeappx" pack /d ${Env:NAME}_pkg_$arch /p ${Env:NAME}_$arch.appx /nv
+        & "$makeappx" pack /d ${Env:NAME_INSIDER}_pkg_$arch /p ${Env:NAME_INSIDER}_$arch.appx /nv
+        Compress-Archive -LiteralPath "${Env:NAME}_$arch.appx", "Default/${Env:NAME}_command.dll" -DestinationPath ${Env:NAME}_$arch.zip
+        Compress-Archive -LiteralPath "${Env:NAME_INSIDER}_$arch.appx", "Default/${Env:NAME_INSIDER}_command.dll" -DestinationPath ${Env:NAME_INSIDER}_$arch.zip
 
     - name: Archive sparse packages
       uses: actions/upload-artifact@v3
