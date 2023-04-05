@@ -55,7 +55,7 @@ jobs:
     - name: Create sparse packages
       run: |
         $arch = '${{ matrix.arch }}'
-        $makeappx = "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\$arch\makeappx.exe"
+        $makeappx = "C:\Program Files (x86)\Windows Kits\10\App Certification Kit\makeappx.exe"
         & python scripts\generate_pkg.py codium $arch template\AppxManifest.xml
         & python scripts\generate_pkg.py codium_insiders $arch template\AppxManifest.xml
         Set-Location out
