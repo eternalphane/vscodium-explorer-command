@@ -1,0 +1,72 @@
+name: build-win32
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+          shell: pwsh
+    env:
+      GYP_MSVS_VERSION: '2022'
+      NAME: codium_explorer
+      NAME_INSIDER: codium_insiders_explorer
+    strategy:
+      matrix:
+        arch:
+        - x86
+        - x64
+        - arm64
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Setup python
+      uses: actions/setup-python@v4.5.0
+      with:
+        python-version: '3.10'
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.0.2
+      with:
+        msbuild-architecture: ${{ matrix.arch }}
+
+    - name: Generate project solution
+      run: |
+        & python gyp_library.py ${{ matrix.arch }}
+
+    - name: Build
+      working-directory: out
+      run: |
+        & msbuild /m main.sln
+
+    - name: Create sparse packages
+      run: |
+        $arch = '${{ matrix.arch }}'
+        $makeappx = "C:\Program Files (x86)\Windows Kits\10\App Certification Kit\makeappx.exe"
+        & python scripts\generate_pkg.py codium $arch template\AppxManifest.xml
+        & python scripts\generate_pkg.py codium_insiders $arch template\AppxManifest.xml
+        Set-Location out
+        & "$makeappx" pack /d ${Env:NAME}_pkg_$arch /p ${Env:NAME}_$arch.appx /nv
+        & "$makeappx" pack /d ${Env:NAME_INSIDER}_pkg_$arch /p ${Env:NAME_INSIDER}_$arch.appx /nv
+        Compress-Archive -LiteralPath "${Env:NAME}_$arch.appx", "Default/${Env:NAME}_command.dll" -DestinationPath ${Env:NAME}_$arch.zip
+        Compress-Archive -LiteralPath "${Env:NAME_INSIDER}_$arch.appx", "Default/${Env:NAME_INSIDER}_command.dll" -DestinationPath ${Env:NAME_INSIDER}_$arch.zip
+
+    - name: Archive sparse packages
+      uses: actions/upload-artifact@v3
+      with:
+        path: |
+          out/${{ env.NAME }}_${{ matrix.arch }}.zip
+          out/${{ env.NAME_INSIDER }}_${{ matrix.arch }}.zip
